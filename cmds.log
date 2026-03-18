@@ -1,0 +1,13 @@
+cd /Users/JadaNguyen/Documents/New\ project/apue.3e/lib
+make PLATFORM=macos all
+cd /Users/JadaNguyen/Documents/New\ project/apue.3e/fileio
+make PLATFORM=macos mycat
+printf 'hello\nworld\n' | ./mycat > /tmp/mycat.out 2> /tmp/mycat.err
+cd /Users/JadaNguyen/Documents/New\ project/apue.3e/signals
+make PLATFORM=macos sigusr
+./sigusr &
+kill -SIGUSR1 7406
+kill -SIGUSR2 7406
+kill -SIGCONT 7406
+kill -9 7406
+history > cmds.log

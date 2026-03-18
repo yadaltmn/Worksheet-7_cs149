@@ -1,0 +1,73 @@
+{
+  "app": "Repair Relay",
+  "source_of_truth": "repair_relay",
+  "estimate_sources": ["ccc_one", "mitchell", "manual"],
+  "stages": [
+    "intake",
+    "estimating",
+    "awaiting_customer_approval",
+    "parts_ordering",
+    "parts_pending",
+    "ready_for_repair",
+    "in_repair",
+    "supplement_review",
+    "paint_queue",
+    "in_paint",
+    "reassembly",
+    "awaiting_missing_parts",
+    "detail_queue",
+    "in_detail",
+    "quality_inspection",
+    "ready_for_pickup",
+    "payment_exception",
+    "picked_up",
+    "hold_24_48",
+    "closeout_review",
+    "closed"
+  ],
+  "rules": [
+    {
+      "id": "qc-required-before-pickup",
+      "if": {
+        "stage": "ready_for_pickup",
+        "qc_passed": false
+      },
+      "then": "flag_rule_violation"
+    },
+    {
+      "id": "repair-needs-technician",
+      "if": {
+        "stage": "in_repair",
+        "technician_assigned": false
+      },
+      "then": "flag_rule_violation"
+    },
+    {
+      "id": "reassembly-blocked-by-parts",
+      "if": {
+        "stage": "reassembly",
+        "critical_parts_missing": true
+      },
+      "then": "flag_rule_violation"
+    },
+    {
+      "id": "closeout-needs-clean-file",
+      "if": {
+        "stage": "closed",
+        "closeout_errors_present": true
+      },
+      "then": "flag_rule_violation"
+    }
+  ],
+  "required_fields": [
+    "repair_order_number",
+    "customer_name",
+    "vehicle",
+    "stage",
+    "estimator",
+    "approval_status",
+    "parts_status",
+    "payment_status",
+    "qc_passed"
+  ]
+}
