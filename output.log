@@ -1,0 +1,18 @@
+Expected output for Worksheet 7
+
+Lab 3: mycat
+$ printf 'hello\nworld\n' | ./mycat
+hello
+world
+read 12 bytes
+
+Lab 4: sigusr
+$ ./sigusr &
+[1] 12345
+$ kill -SIGUSR1 12345
+received SIGUSR1
+$ kill -SIGUSR2 12345
+received SIGUSR2
+$ kill -SIGCONT 12345
+received SIGCONT
+$ kill -9 12345
